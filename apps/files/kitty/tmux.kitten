@@ -1,0 +1,1 @@
+launch sesh connect $(sesh list | fzf --height 24)
