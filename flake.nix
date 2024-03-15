@@ -14,9 +14,18 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      hostname = "jz-laptop";
+      username = "mr-jz";
+      gitUsername = "Jan Zisenis";
+      gitEmail = "j.zisenis@netrocks.de";
+      theLocale = "en_US.UTF-8";
+      theKBDLayout = "us";
+      theLCVariables = "en_US.UTF-8";
+      theTimezone = "Europe/Berlin";
+      flakeDir = "/home/${username}/.config/home-manager";
     in {
-      homeConfigurations."mr-jz" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs; inherit username; inherit flakeDir;
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
@@ -24,6 +33,9 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
+        extraSpecialArgs = {
+            inherit username; inherit pkgs; inherit flakeDir;
+          };
       };
     };
 }
