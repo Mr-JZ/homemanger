@@ -21,6 +21,7 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs;[
+    clang
     neovim
     tmux
     playerctl
@@ -28,11 +29,12 @@ in {
     stow 
     lazygit
     dbeaver
-    via
-    etcher
     glab
-    quickemu
+    gh
     fd
+    git
+    zoxide
+    kitty
   ];
 
   home.file = {
@@ -41,17 +43,16 @@ in {
     ".base16-themes".source = ./apps/files/base16-themes;
     ".face".source = ./apps/files/face.jpg; # For GDM
     ".face.icon".source = ./apps/files/face.jpg; # For SDDM
-    ".config/rofi/rofi.jpg".source = ./apps/files/rofi.jpg;
     ".config/starship.toml".source = ./apps/files/starship.toml;
-    ".gnupg/gpg-agent.conf".source = ./apps/files/gpg-agent.conf;
     ".local/share/fonts" = {
       source = ./apps/files/fonts;
       recursive = true;
     };
     ".config/tmux".source = builtins.fetchGit {
-    url = "https://github.com/Mr-JZ/tmuxconfig.git";
-    rev = "aaa2b19bd5a6a3eb1fb5e14491fa107afbe4bd8e";
-    submodules = true;
+     url = "https://github.com/Mr-JZ/tmuxconfig.git";
+     rev = "aaa2b19bd5a6a3eb1fb5e14491fa107afbe4bd8e";
+     #submodules = true;
+     #allRefs = true;
     };
     ".config/nvim".source =  builtins.fetchGit {
       url = "https://github.com/Mr-JZ/nvimconfig.git";
