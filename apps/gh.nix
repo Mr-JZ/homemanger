@@ -1,4 +1,4 @@
-{ config, pkgs, flakeDir, ... }:
+{ config, pkgs, ... }:
 {
     programs.gh = {
       enable = true;
