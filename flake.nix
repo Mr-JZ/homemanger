@@ -26,7 +26,7 @@
         # to pass through arguments to home.nix
       };
       home-manager.extraSpecialArgs = {
-            inherit username; inherit pkgs; inherit flakeDir;
+            inherit pkgs;
       };
     };
 }
