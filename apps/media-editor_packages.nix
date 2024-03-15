@@ -1,5 +1,4 @@
-{ pkgs, config, browser, wallpaperDir, flakeDir,
-  username, wallpaperGit, ... }:
+{ pkgs, config, ... }:
 
 {
   # Install Packages For The User
