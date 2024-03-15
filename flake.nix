@@ -14,15 +14,6 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      hostname = "jz-laptop";
-      username = "mr-jz";
-      gitUsername = "Jan Zisenis";
-      gitEmail = "j.zisenis@netrocks.de";
-      theLocale = "en_US.UTF-8";
-      theKBDLayout = "us";
-      theLCVariables = "en_US.UTF-8";
-      theTimezone = "Europe/Berlin";
-      flakeDir = "/home/${username}/.config/home-manager";
     in {
       homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

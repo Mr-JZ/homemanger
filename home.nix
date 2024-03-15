@@ -1,6 +1,8 @@
 { config, pkgs, flakeDir, ... }:
 
-{
+let
+  flakeDir = "/home/${username}/.config/home-manager";
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "mr-jz";
