@@ -27,7 +27,7 @@
         # to pass through arguments to home.nix
       };
       home-manager.extraSpecialArgs = {
-            inherit pkgs;
+            inherit pkgs; inherit username;
       };
     };
 }

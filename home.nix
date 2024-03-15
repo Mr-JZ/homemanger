@@ -1,4 +1,4 @@
-{ config, pkgs, flakeDir, ... }:
+{ config, pkgs, username, ... }:
 
 let
   flakeDir = "/home/${username}/.config/home-manager";
