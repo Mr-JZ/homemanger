@@ -18,58 +18,132 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    neovim
+    tmux
+    playerctl
+    speedtest-cli
+    stow 
+    lazygit
+    dbeaver
+    via
+    etcher
+    glab
+    quickemu
+    fd
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+    ".config/zaney-stinger.mov".source = ./apps/files/media/zaney-stinger.mov;
+    ".emoji".source = ./apps/files/emoji;
+    ".base16-themes".source = ./apps/files/base16-themes;
+    ".face".source = ./apps/files/face.jpg; # For GDM
+    ".face.icon".source = ./apps/files/face.jpg; # For SDDM
+    ".config/rofi/rofi.jpg".source = ./apps/files/rofi.jpg;
+    ".config/starship.toml".source = ./apps/files/starship.toml;
+    ".gnupg/gpg-agent.conf".source = ./apps/files/gpg-agent.conf;
+    ".local/share/fonts" = {
+      source = ./apps/files/fonts;
+      recursive = true;
+    };
+    ".config/tmux".source = builtins.fetchGit {
+    url = "https://github.com/Mr-JZ/tmuxconfig.git";
+    rev = "aaa2b19bd5a6a3eb1fb5e14491fa107afbe4bd8e";
+    submodules = true;
+    };
+    ".config/nvim".source =  builtins.fetchGit {
+      url = "https://github.com/Mr-JZ/nvimconfig.git";
+      rev = "f710218b40259bb601ebd50a6a9d039e00b2de16";
+    };
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. If you don't want to manage your shell through Home
-  # Manager then you have to manually source 'hm-session-vars.sh' located at
-  # either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/mr-jz/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+    profileExtra = ''
+      #if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+      #  exec Hyprland
+      #fi
+    '';
+    initExtra = ''
+
+    stty -ixon
+
+    # the command that initializes zoxide. And make that zoxide works with bash
+    eval "$(zoxide init bash)" 
+    # include path to PATH
+    export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
+    export PATH=$PATH:$HOME/go/bin
+
+    if [ -f $HOME/.bashrc-personal ]; then
+        source $HOME/.bashrc-personal
+    fi
+    echo "this for internet connection: nmcli device wifi connect <SSID> password <PASS>"
+    if command -v fzf-share >/dev/null; then
+      source "$(fzf-share)/key-bindings.bash"
+      source "$(fzf-share)/completion.bash"
+    fi
+
+    bind '"\C-w": backward-kill-word'
+    UID=$(id -u)
+    GID=$(id -g)
+    if [ -f "/run/secrets/openai_api_key" ]; then
+      export OPENAI_API_KEY=$(cat /run/secrets/openai_api_key)
+    fi
+    '';
+    sessionVariables = {
+    };
+    shellAliases = {
+      sv="sudo vim";
+      flake-rebuild="nix run nixpkgs#home-manager -- switch --flake ${flakeDir}#$USE";
+      flake-update="sudo nix flake update ${flakeDir}";
+      gcCleanup="nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
+      ghd="gh-dash";
+      ghc="gh repo clone $(gh repo list | fzf | awk '{print $1}')";
+      git-hash-copy="printf %s \"$(git rev-parse HEAD)\" | wl-copy";
+      mullr="mullvad relay set location $(mullvad relay list | fzf | awk '{print $1}')";
+      z="zoxide";
+      v="nvim";
+      ls="lsd";
+      ll="lsd -l";
+      la="lsd -a";
+      lal="lsd -al";
+      wifi="nmcli device wifi";
+      cgh="git rev-parse main | wl-copy";
+      ".."="cd ..";
+      s = "sesh connect $(sesh list | fzf --height 24)";
+    };
+  };
+
+  programs.kitty = {
+    enable = true;
+    package = pkgs.kitty;
+    font.name = "JetBrainsMono Nerd Font";
+    font.size = 16;
+    settings = {
+      scrollback_lines = 2000;
+      wheel_scroll_min_lines = 1;
+      window_padding_width = 6;
+      confirm_os_window_close = 0;
+      background_opacity = "0.85";
+    };
+    keybindings = {
+      "alt+g" = "send_key ctrl+b g";
+      "alt+c" = "send_key ctrl+b c";
+      "alt+x" = "send_key ctrl+b x";
+      "alt+n" = "send_key ctrl+b n";
+      "alt+p" = "send_key ctrl+b p";
+      "alt+e" = "send_key ctrl+b e";
+      "alt+z" = "send_key ctrl+b z";
+      "alt+f" = "send_key ctrl+b m";
+      "alt+'" = "send_key ctrl+b \"";
+      "alt+%" = "send_key ctrl+b %";
+    };
+  };
 }
