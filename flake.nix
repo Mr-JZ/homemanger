@@ -25,7 +25,7 @@
       flakeDir = "/home/${username}/.config/home-manager";
     in {
       homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs; inherit username; inherit flakeDir;
+        inherit pkgs;
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
