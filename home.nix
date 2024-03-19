@@ -36,6 +36,7 @@ in {
     zoxide
     kitty
     go
+    fzf
   ];
 
   home.file = {
