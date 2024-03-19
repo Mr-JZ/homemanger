@@ -34,7 +34,7 @@ in {
     fd
     git
     zoxide
-    kitty
+    # kitty # not running on ubuntu
     go
     fzf
   ];
