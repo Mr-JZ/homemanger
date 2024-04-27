@@ -97,18 +97,11 @@ in {
     if [ -f $HOME/.bashrc-personal ]; then
         source $HOME/.bashrc-personal
     fi
-    echo "this for internet connection: nmcli device wifi connect <SSID> password <PASS>"
     if command -v fzf-share >/dev/null; then
       source "$(fzf-share)/key-bindings.bash"
       source "$(fzf-share)/completion.bash"
     fi
 
-    bind '"\C-w": backward-kill-word'
-    UID=$(id -u)
-    GID=$(id -g)
-    if [ -f "/run/secrets/openai_api_key" ]; then
-      export OPENAI_API_KEY=$(cat /run/secrets/openai_api_key)
-    fi
     eval "$(starship init bash)"
     '';
     sessionVariables = {
