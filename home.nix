@@ -20,9 +20,11 @@ in {
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs;[
     clang
     neovim
+    nerdfonts
     tmux
     playerctl
     speedtest-cli
@@ -37,6 +39,7 @@ in {
     # kitty # not running on ubuntu
     go
     fzf
+    (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
 
   home.file = {
