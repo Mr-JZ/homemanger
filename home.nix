@@ -36,6 +36,7 @@ in {
     fd
     git
     zoxide
+    starship
     go
     clang
     (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
@@ -93,6 +94,7 @@ in {
     if [ -f "/run/secrets/openai_api_key" ]; then
       export OPENAI_API_KEY=$(cat /run/secrets/openai_api_key)
     fi
+    eval "$(starship init bash)"
     '';
     sessionVariables = {
     };
