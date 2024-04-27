@@ -155,6 +155,8 @@ in {
       "alt+f" = "send_key ctrl+b m";
       "alt+'" = "send_key ctrl+b \"";
       "alt+%" = "send_key ctrl+b %";
+      "alt+u" = "send_key ctrl+b u";
+      "alt+v" = "send_key v enter";
     };
   };
 }
