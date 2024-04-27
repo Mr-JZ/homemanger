@@ -22,9 +22,9 @@ in {
   # environment.
   fonts.fontconfig.enable = true;
   home.packages = with pkgs;[
-    clang
-    neovim
     nerdfonts
+    neovim
+    fzf
     tmux
     playerctl
     speedtest-cli
@@ -36,12 +36,10 @@ in {
     fd
     git
     zoxide
-    # kitty # not running on ubuntu
     go
-    fzf
+    clang
     (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
-
   home.file = {
     ".config/zaney-stinger.mov".source = ./apps/files/media/zaney-stinger.mov;
     ".emoji".source = ./apps/files/emoji;
@@ -52,16 +50,6 @@ in {
     ".local/share/fonts" = {
       source = ./apps/files/fonts;
       recursive = true;
-    };
-    ".config/tmux".source = builtins.fetchGit {
-     url = "https://github.com/Mr-JZ/tmuxconfig.git";
-     rev = "aaa2b19bd5a6a3eb1fb5e14491fa107afbe4bd8e";
-     #submodules = true;
-     #allRefs = true;
-    };
-    ".config/nvim".source =  builtins.fetchGit {
-      url = "https://github.com/Mr-JZ/nvimconfig.git";
-      rev = "f710218b40259bb601ebd50a6a9d039e00b2de16";
     };
   };
 
