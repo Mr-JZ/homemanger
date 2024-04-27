@@ -103,6 +103,10 @@ in {
     fi
 
     eval "$(starship init bash)"
+
+    if ! tmux has-session >/dev/null 2>&1; then
+      s
+    fi
     '';
     sessionVariables = {
     };
