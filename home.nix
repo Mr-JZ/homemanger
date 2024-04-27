@@ -25,6 +25,8 @@ in {
     nerdfonts
     neovim
     fzf
+    zathura
+    tailscale
     tmux
     playerctl
     speedtest-cli
@@ -34,11 +36,24 @@ in {
     glab
     gh
     fd
+    ripgrep
+    lsd
     git
     zoxide
     starship
+    python313
+    julia
     go
+    texliveFull
+    nodejs
+    nodePackages.npm
+    php
+    php83Packages.composer
+    luajitPackages.luarocks
     clang
+    cargo
+    zulu17
+    gnumake
     (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
   home.file = {
