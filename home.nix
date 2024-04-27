@@ -26,6 +26,7 @@ in {
     neovim
     fzf
     zathura
+    zotero
     tailscale
     tmux
     playerctl
