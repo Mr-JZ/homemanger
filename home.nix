@@ -64,6 +64,7 @@ in {
     ".face".source = ./apps/files/face.jpg; # For GDM
     ".face.icon".source = ./apps/files/face.jpg; # For SDDM
     ".config/starship.toml".source = ./apps/files/starship.toml;
+    ".config/kitty/kitty.conf".source = ./apps/files/kitty.conf;
     ".local/share/fonts" = {
       source = ./apps/files/fonts;
       recursive = true;
@@ -113,7 +114,7 @@ in {
     };
     shellAliases = {
       sv="sudo vim";
-      flake-rebuild="nix run nixpkgs#home-manager -- switch --flake ${flakeDir}#$USE";
+      flake-rebuild="nix run nixpkgs#home-manager -- switch --flake ${flakeDir}#$USE --impure";
       flake-update="sudo nix flake update ${flakeDir}";
       gcCleanup="nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
       ghd="gh-dash";
@@ -134,8 +135,7 @@ in {
   };
 
   programs.kitty = {
-    enable = true;
-    package = pkgs.kitty;
+    enable = false;
     font.name = "JetBrainsMono Nerd Font";
     font.size = 16;
     settings = {
