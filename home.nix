@@ -24,6 +24,7 @@ in {
   home.packages = with pkgs;[
     nerdfonts
     #neovim
+    tokei
     fzf
     zathura
     zotero
