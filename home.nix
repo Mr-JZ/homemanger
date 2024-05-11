@@ -25,6 +25,7 @@ in {
     nerdfonts
     #neovim
     tokei
+    toipe
     fzf
     zathura
     zotero
